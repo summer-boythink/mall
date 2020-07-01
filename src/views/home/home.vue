@@ -1,16 +1,26 @@
 <template>
 <div id="home">
     <navbar class="home-nav"><div slot="center">购物</div></navbar>
+    <swiper>
+        <swiper-item v-for="item in banners" :key ="item">
+            <a :href="item.link">
+                <img :src="item.image" alt="">
+            </a>
+        </swiper-item>
+    </swiper>
 </div>
 </template>
 
 <script>
 import navbar from 'components/common/navbar/navbar'
 import {gethomemultidata} from 'network/home'
+import {Swiper,SwiperItem} from 'components/common/swiper/index'
 export default {
     name:"home",
     components:{
-        navbar
+        navbar,
+        Swiper,
+        SwiperItem
     },
     data(){
         return {
@@ -31,6 +41,6 @@ export default {
 <style scoped>
     .home-nav{
         background-color:pink;
-        color:#fff
+        color:#ffffff
     }
 </style>
