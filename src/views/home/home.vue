@@ -84,7 +84,12 @@ export default {
         return {
             banners:[],
             recommends:[],
-            titles:["流行","新款","精选"]
+            titles:["流行","新款","精选"],
+            goods:{
+                'pop':{page:0,list:[]},
+                'new':{page:0,list:[]},
+                'sell':{page:0,list:[]}
+            }
         }
     },
     created(){
