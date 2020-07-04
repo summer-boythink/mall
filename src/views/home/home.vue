@@ -68,7 +68,7 @@ import HomeSwiper from './childs/HomeSwiper'
 import recommendview from './childs/Recommendview'
 import pop from './childs/pop'
 
-import {gethomemultidata} from 'network/home'
+import {gethomemultidata,gethomegoods} from 'network/home'
 
 export default {
     name:"home",
@@ -93,11 +93,26 @@ export default {
         }
     },
     created(){
-        gethomemultidata().then(res => {
-            console.log(res);
-            this.banners = res.data.banner.list
-            this.recommends = res.data.recommend.list
-        })
+        this.gethomemultidata()
+        this.gethomegoods('pop')
+        this.gethomegoods('new')
+        this.gethomegoods('sell')
+    },
+    methods:{
+        gethomemultidata(){
+            gethomemultidata().then(res => {
+                console.log(res);
+                this.banners = res.data.banner.list
+                this.recommends = res.data.recommend.list
+            })
+        },
+        gethomegoods(type){
+            const page = this.goods[type].page+1
+            gethomegoods(type,page).then(res => {
+                this.goods[type].list.push(...res.data.list)
+            })
+            this.goods[type].page++
+        }
     }
 }
 </script>
