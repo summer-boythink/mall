@@ -4,65 +4,37 @@
     <home-swiper :banners="banners"></home-swiper>
     <recommendview :recommends="recommends"></recommendview>
     <pop></pop>
-    <tabcontrol class="tab-con" :titles="titles"></tabcontrol>
-<ul>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-</ul>  
+    <tabcontrol class="tab-con" :titles="titles" @tabclick='tabclick'></tabcontrol>
+    <goodslist :goods="goods[this.currentindex].list"></goodslist>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+    </ul> 
 </div>
 </template>
 
 <script>
 import navbar from 'components/common/navbar/navbar'
-import tabcontrol from 'components/content/tabcontrol/tabcontrol'                   
+import tabcontrol from 'components/content/tabcontrol/tabcontrol'
+import goodslist from 'components/content/goods/goodslist'                   
 
 import HomeSwiper from './childs/HomeSwiper'
 import recommendview from './childs/Recommendview'
@@ -77,7 +49,8 @@ export default {
         HomeSwiper,
         recommendview,
         pop,
-        tabcontrol
+        tabcontrol,
+        goodslist
 
     },
     data(){
@@ -89,7 +62,8 @@ export default {
                 'pop':{page:0,list:[]},
                 'new':{page:0,list:[]},
                 'sell':{page:0,list:[]}
-            }
+            },
+            currentindex:"pop"
         }
     },
     created(){
@@ -99,6 +73,8 @@ export default {
         this.gethomegoods('sell')
     },
     methods:{
+
+        //网络请求
         gethomemultidata(){
             gethomemultidata().then(res => {
                 console.log(res);
@@ -112,6 +88,21 @@ export default {
                 this.goods[type].list.push(...res.data.list)
             })
             this.goods[type].page++
+        },
+        //事件监听
+        tabclick(index){
+            console.log(index);
+            switch(index){
+                case 0:
+                    this.currentindex='pop'
+                    break
+                case 1:
+                    this.currentindex="new"
+                    break
+                case 2:
+                    this.currentindex='sell'
+                    break
+            }
         }
     }
 }
@@ -125,6 +116,7 @@ export default {
         background-color:pink;
         color:#ffffff;
         position: fixed;
+        width:100%;
         left: 0;
         right: 0;
         top: 0;
@@ -134,5 +126,6 @@ export default {
     .tab-con{
         position: sticky;
         top: 44px;
+        background-color: white;
     }
 </style>

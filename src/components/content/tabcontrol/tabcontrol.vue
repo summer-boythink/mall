@@ -24,7 +24,8 @@ export default{
     },
     methods:{
         change(index){
-            this.currentindex=index
+            this.currentindex=index;
+            this.$emit('tabclick',index)
         }
     }
 }
@@ -37,6 +38,7 @@ export default{
         font-size: 15px;
         height: 40px;
         line-height: 40px;
+        z-index: 9;
     }
     .tab-item{
         flex: 1;
