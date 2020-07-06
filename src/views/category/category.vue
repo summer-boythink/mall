@@ -211,7 +211,7 @@ export default {
     name:"category",
 	data(){
 		// return{
-		// 	bet:null
+		// 	bet:nulls
 		// }
 	},
 	mounted(){
