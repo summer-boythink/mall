@@ -1,6 +1,7 @@
 <template>
     <div class="wrappar">
 		<ul class="content">
+			<button @click="btn">aa</button>
         	<li>分类1</li>
         	<li>分类2</li>
         	<li>分类3</li>
@@ -215,7 +216,21 @@ export default {
 		// }
 	},
 	mounted(){
-		 let bet=new betscroll('.wrappar',{})
+		 let bet=new betscroll('.wrappar',{
+			 probeType:3,
+			 pullUpLoad:true
+		 })
+		 bet.on('scroll',(position) => {
+			 console.log(position)
+		 })
+		 bet.on('pullingUp',() => {
+			 console.log('shangl')
+		 })
+	},
+	methods:{
+		btn(){
+			console.log("aaaaa")
+		}
 	}
 }
 </script>
