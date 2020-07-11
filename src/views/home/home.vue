@@ -1,46 +1,30 @@
 <template>
 <div id="home">
     <navbar class="home-nav"><div slot="center">购物</div></navbar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommendview :recommends="recommends"></recommendview>
-    <pop></pop>
-    <tabcontrol class="tab-con" :titles="titles" @tabclick='tabclick'></tabcontrol>
-    <goodslist :goods="goods[this.currentindex].list"></goodslist>
-    <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
-        <li>11</li>
-        <li>12</li>
-        <li>13</li>
-        <li>14</li>
-        <li>15</li>
-        <li>16</li>
-        <li>17</li>
-        <li>18</li>
-        <li>19</li>
-        <li>20</li>
-    </ul> 
+            <scroll class="content">
+                <backtop></backtop>
+                <home-swiper :banners="banners"></home-swiper>
+                <recommendview :recommends="recommends"></recommendview>
+                <pop></pop>
+                <tabcontrol class="tab-con" :titles="titles" @tabclick='tabclick'></tabcontrol>
+                <goodslist :goods="goods[this.currentindex].list"></goodslist>
+                
+            </scroll>
 </div>
 </template>
 
 <script>
 import navbar from 'components/common/navbar/navbar'
 import tabcontrol from 'components/content/tabcontrol/tabcontrol'
-import goodslist from 'components/content/goods/goodslist'                   
+import goodslist from 'components/content/goods/goodslist'  
+import backtop from 'components/content/backtop/backtop'                 
 
 import HomeSwiper from './childs/HomeSwiper'
 import recommendview from './childs/Recommendview'
 import pop from './childs/pop'
 
 import {gethomemultidata,gethomegoods} from 'network/home'
+import scroll from 'components/common/scroll/scroll'
 
 export default {
     name:"home",
@@ -50,7 +34,9 @@ export default {
         recommendview,
         pop,
         tabcontrol,
-        goodslist
+        goodslist,
+        scroll,
+        backtop
 
     },
     data(){
@@ -110,7 +96,8 @@ export default {
 
 <style scoped>
     #home{
-        padding-top: 44px;
+        /* padding-top: 44px; */
+        height: 100vh;
     }
     .home-nav{
         background-color:pink;
@@ -127,5 +114,12 @@ export default {
         position: sticky;
         top: 44px;
         background-color: white;
+    }
+    .content{
+        
+        height: calc(100% - 89px);
+        overflow: hidden;
+        margin-top:44px ;
+
     }
 </style>
