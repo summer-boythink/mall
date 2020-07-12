@@ -1,8 +1,8 @@
 <template>
 <div id="home">
     <navbar class="home-nav"><div slot="center">购物</div></navbar>
-            <scroll class="content">
-                <backtop></backtop>
+            <scroll class="content" ref="scroll">
+                
                 <home-swiper :banners="banners"></home-swiper>
                 <recommendview :recommends="recommends"></recommendview>
                 <pop></pop>
@@ -10,6 +10,7 @@
                 <goodslist :goods="goods[this.currentindex].list"></goodslist>
                 
             </scroll>
+            <backtop @click.native="toback"></backtop>
 </div>
 </template>
 
@@ -89,6 +90,9 @@ export default {
                     this.currentindex='sell'
                     break
             }
+        },
+        toback(){
+            this.$refs.scroll.scrollTo(0,0)
         }
     }
 }
@@ -117,7 +121,7 @@ export default {
     }
     .content{
         
-        height: calc(100% - 89px);
+        height: calc(100% - 93px);
         overflow: hidden;
         margin-top:44px ;
 
