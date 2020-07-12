@@ -211,9 +211,9 @@ import betscroll from 'better-scroll'
 export default {
     name:"category",
 	data(){
-		// return{
-		// 	bet:nulls
-		// }
+		return{
+			bet:null
+		}
 	},
 	mounted(){
 		 let bet=new betscroll('.wrappar',{
@@ -221,15 +221,15 @@ export default {
 			 pullUpLoad:true
 		 })
 		 bet.on('scroll',(position) => {
-			 console.log(position)
+			//  console.log(position)
 		 })
 		 bet.on('pullingUp',() => {
-			 console.log('shangl')
+			//  console.log('shangl')
 		 })
 	},
 	methods:{
 		btn(){
-			console.log("aaaaa")
+			// console.log("aaaaa")
 		}
 	}
 }

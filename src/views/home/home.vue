@@ -1,7 +1,7 @@
 <template>
 <div id="home">
     <navbar class="home-nav"><div slot="center">购物</div></navbar>
-            <scroll class="content" ref="scroll">
+            <scroll class="content" ref="scroll" :probeType="3" @scroll="contentscr" :pullupload="true">
                 
                 <home-swiper :banners="banners"></home-swiper>
                 <recommendview :recommends="recommends"></recommendview>
@@ -10,7 +10,7 @@
                 <goodslist :goods="goods[this.currentindex].list"></goodslist>
                 
             </scroll>
-            <backtop @click.native="toback"></backtop>
+            <backtop @click.native="toback" v-show="isshowtop"></backtop>
 </div>
 </template>
 
@@ -50,7 +50,8 @@ export default {
                 'new':{page:0,list:[]},
                 'sell':{page:0,list:[]}
             },
-            currentindex:"pop"
+            currentindex:"pop",
+            isshowtop:false 
         }
     },
     created(){
@@ -60,7 +61,9 @@ export default {
         this.gethomegoods('sell')
     },
     methods:{
-
+        contentscr(position){
+            this.isshowtop = (-position.y)>500
+        },
         //网络请求
         gethomemultidata(){
             gethomemultidata().then(res => {
