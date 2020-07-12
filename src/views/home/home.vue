@@ -82,7 +82,7 @@ export default {
                 this.goods[type].list.push(...res.data.list)
             })
             this.goods[type].page++
-            this.$refs.scroll.finshPullUp()
+            this.$refs.scroll.finishPullUp()
         },
         //事件监听
         tabclick(index){
