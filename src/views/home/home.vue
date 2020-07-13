@@ -4,8 +4,8 @@
             <scroll class="content" ref="scroll"
                     :probeType="3"
                     @scroll="contentscr"
-                    :pull-up-load="true"
-                    @pullingUp="loadmore">
+                    :pull-up-load="true">
+<!--                    @pullingUp="loadmore"-->
 
                 <home-swiper :banners="banners"></home-swiper>
                 <recommendview :recommends="recommends"></recommendview>
@@ -63,6 +63,10 @@ export default {
         this.gethomegoods('pop')
         this.gethomegoods('new')
         this.gethomegoods('sell')
+
+        this.$bus.$on('imgload',() =>{
+          console.log('aaaa')
+        })
     },
     methods:{
         contentscr(position){
@@ -82,7 +86,7 @@ export default {
                 this.goods[type].list.push(...res.data.list)
             })
             this.goods[type].page++
-            this.$refs.scroll.finishPullUps()
+            this.$refs.scroll&&this.$refs.scroll.finishPullUps()
         },
         //事件监听
         tabclick(index){

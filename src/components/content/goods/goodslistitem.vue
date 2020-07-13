@@ -1,6 +1,6 @@
 <template>
 <div class="goods-item">
-<img :src="goodsitem.show.img" alt="">
+<img :src="goodsitem.show.img" alt="" @load="imgok">
 <div class="context">
     <p>{{goodsitem.title}}</p>
     <span class="price">{{goodsitem.price}}</span>
@@ -8,7 +8,7 @@
 </div>
 </div>
 </template>
-          
+
 <script>
 export default{
     name:'goodslistitem',
@@ -19,10 +19,15 @@ export default{
                 return {}
             }
         }
-    }
+    },
+  methods:{
+      imgok(){
+        this.$bus.$emit('imgload')
+      }
+  }
 }
 </script>
-          
+
 <style scoped>
    .goods-item {
     position: relative;
@@ -65,5 +70,5 @@ export default{
     width: 14px;
     height: 14px;
     background: url(~assets/img/common/collect.svg) 0 0/14px 14px;
-  }      
+  }
 </style>
