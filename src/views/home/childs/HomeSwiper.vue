@@ -3,13 +3,13 @@
     <swiper>
         <swiper-item v-for="(item) in banners" :key ="item.index">
             <a :href="item.link">
-                <img :src="item.image" alt="">
+                <img :src="item.image" alt="" @load="imgok">
             </a>
         </swiper-item>
     </swiper>
 </div>
 </template>
-          
+
 <script>
     import {Swiper,SwiperItem} from 'components/common/swiper/index'
     export default{
@@ -25,10 +25,24 @@
         components:{
             Swiper,
             SwiperItem
+        },
+      data(){
+          return{
+            isLoad:false
+          }
+      },
+      methods:{
+          imgok(){
+            if(!this.isLoad){
+              this.$emit("swiperimgload")
+              this.isLoad = true
+            }
+
         }
+      }
     }
 </script>
-          
+
 <style scoped>
-           
+
 </style>
