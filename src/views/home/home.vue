@@ -4,8 +4,10 @@
             <scroll class="content" ref="scroll"
                     :probeType="3"
                     @scroll="contentscr"
-                    :pull-up-load="true">
-<!--                    @pullingUp="loadmore"-->
+                    :pull-up-load="true"
+                    @pullingUp="loadmore"
+            >
+
 
                 <home-swiper :banners="banners"></home-swiper>
                 <recommendview :recommends="recommends"></recommendview>
@@ -30,6 +32,7 @@ import pop from './childs/pop'
 
 import {gethomemultidata,gethomegoods} from 'network/home'
 import scroll from 'components/common/scroll/scroll'
+import {debounce} from 'common/utils'
 
 export default {
     name:"home",
@@ -63,12 +66,17 @@ export default {
         this.gethomegoods('pop')
         this.gethomegoods('new')
         this.gethomegoods('sell')
-
-        this.$bus.$on('imgload',() =>{
-          console.log('aaaa')
-        })
     },
-    methods:{
+    mounted() {
+          const refresh = debounce(this.$refs.scroll.fresh,200)
+          this.$bus.$on('imgload',() =>{
+          // this.$refs.scroll&&this.$refs.scroll.fresh()
+          // console.log('aaaa')
+            refresh()
+        })
+
+    },
+  methods:{
         contentscr(position){
             this.isshowtop = (-position.y)>500
         },
@@ -106,9 +114,10 @@ export default {
         toback(){
             this.$refs.scroll.scrollTo(0,0)
         },
-      loadmore(){
+        loadmore(){
             this.gethomegoods(this.currentindex)
-      }
+      },
+
     }
 }
 </script>

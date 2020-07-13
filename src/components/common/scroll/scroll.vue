@@ -40,10 +40,16 @@ export default{
             // console.log(position);
             this.$emit('scroll',position)
         })
-        //监听上拉
-        this.scroll.on('pullingUp',()=>{
-           this.$emit('pullingUp')
-        })
+        // //监听上拉
+        // this.scroll.on('pullingUp',()=>{
+        //    this.$emit('pullingUp')
+        // })
+      //监听scroll滚动到底
+        if(this.pullUpLoad){
+          this.scroll.on('pullingUp',() =>{
+            this.$emit('pullingUp')
+          })
+        }
     },
     methods:{
           scrollTo(x,y,time=500){
@@ -51,7 +57,10 @@ export default{
         },
           finishPullUps(){
             this.scroll.finishPullUp()
-          }
+        },
+          fresh(){
+            this.scroll.refresh()
+        }
     }
 }
 </script>
