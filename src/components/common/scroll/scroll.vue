@@ -60,7 +60,10 @@ export default{
         },
           fresh(){
             this.scroll.refresh()
-        }
+        },
+          getscroll(){
+            return this.scroll?this.scroll.y:0
+          }
     }
 }
 </script>

@@ -60,15 +60,23 @@ export default {
             currentindex:"pop",
             isshowtop:false,
             taboffset:0,
-            isswiperfix:false
+            isswiperfix:false,
+            saveY:0
         }
     },
-    created(){
-        this.gethomemultidata()
-        this.gethomegoods('pop')
-        this.gethomegoods('new')
-        this.gethomegoods('sell')
+    activated() {
+      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.fresh()
     },
+    deactivated() {
+      this.saveY = this.$refs.scroll.getscroll()
+    },
+  created(){
+          this.gethomemultidata()
+          this.gethomegoods('pop')
+          this.gethomegoods('new')
+          this.gethomegoods('sell')
+      },
     mounted() {
           const refresh = debounce(this.$refs.scroll.fresh,200)
           this.$bus.$on('imgload',() =>{
@@ -81,7 +89,7 @@ export default {
   methods:{
         contentscr(position){
             this.isshowtop = (-position.y)>500
-            console.log(-position.y)
+            // console.log(-position.y)
             this.isswiperfix = (-position.y)>=this.taboffset
         },
         //网络请求
