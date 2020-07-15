@@ -1,12 +1,13 @@
 <template>
   <div class="slide">
-    <slot></slot>
+    <!-- 每一张图片 -->
+    <slot></slot>   
   </div>
 </template>
 
 <script>
 	export default {
-		name: "Slide"
+		name: "SwiperItem"
 	}
 </script>
 

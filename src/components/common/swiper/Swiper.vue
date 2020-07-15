@@ -1,10 +1,12 @@
 <template>
-    <div id="hy-swiper">
+<!-- 最外层轮播图 -->
+  <div id="hy-swiper">
+      <!-- 存放图片的区域 -->
       <div class="swiper" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
         <slot></slot>
       </div>
-      <slot name="indicator">
-      </slot>
+   
+      <!-- 小圆点 -->
       <div class="indicator">
         <slot name="indicator" v-if="showIndicator && slideCount>1">
           <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentIndex-1}" :key="index"></div>
@@ -14,8 +16,9 @@
 </template>
 
 <script>
-	export default {
-		name: "Swiper",
+export default {
+  name: 'Swpier',
+  	name: "Swiper",
     props: {
       interval: {
 		    type: Number,
@@ -50,7 +53,7 @@
 
         // 2.开启定时器
         this.startTimer();
-      }, 100)
+      }, 500)
     },
     methods: {
 		  /**
@@ -206,20 +209,27 @@
         this.startTimer();
       }
     }
-	}
+}
 </script>
 
 <style scoped>
-  #hy-swiper {
-    overflow: hidden;
-    position: relative;
+  #hy-swiper {  
+   overflow: hidden;
+   position: relative;
+   /* 头部高度 */
   }
-
   .swiper {
     display: flex;
   }
+  .slide {
+     width: 100%;
+    flex-shrink: 0;
+  }
+  .slide img {
+    width: 100%;
+  }
 
-  .indicator {
+   .indicator {
     display: flex;
     justify-content: center;
     position: absolute;
