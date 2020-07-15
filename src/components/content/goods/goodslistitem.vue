@@ -1,6 +1,6 @@
 <template>
 <div class="goods-item">
-<img :src="goodsitem.show.img" alt="" @load="imgok">
+<img :src="goodsitem.show.img" alt="" @load="imgok" @click="todetail">
 <div class="context">
     <p>{{goodsitem.title}}</p>
     <span class="price">{{goodsitem.price}}</span>
@@ -23,6 +23,9 @@ export default{
   methods:{
       imgok(){
         this.$bus.$emit('imgload')
+      },
+      todetail(){
+        this.$router.push('/detail/'+this.goodsitem.iid)
       }
   }
 }
