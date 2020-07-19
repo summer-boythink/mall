@@ -26,6 +26,7 @@
       methods:{
         changeindex(index){
           this.currentindex = index
+          this.$emit('titleclick',index)
         },
         back(){
           this.$router.back()

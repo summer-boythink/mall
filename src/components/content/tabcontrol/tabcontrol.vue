@@ -1,11 +1,12 @@
 <template>
 <div class="tabcontrol">
-    <div v-for="(item,index) in titles" :key="index.item" class="tab-item" :class="{active:index==currentindex}" @click="change(index)">
-        <span>{{item}}</span>    
-    </div> 
+    <div v-for="(item,index) in titles" :key="index.item" class="tab-item"
+         :class="{active:index==currentindex}" @click="change(index)">
+        <span>{{item}}</span>
+    </div>
 </div>
 </template>
-          
+
 <script>
 export default{
     name:'tabcontrol',
@@ -14,7 +15,7 @@ export default{
           type:Array,
           default(){
                 return []
-            }  
+            }
         }
     },
     data(){
@@ -30,7 +31,7 @@ export default{
     }
 }
 </script>
-          
+
 <style scoped>
     .tabcontrol{
         display: flex;
@@ -51,5 +52,5 @@ export default{
     }
     .active span{
         border-bottom: 2px solid pink;
-    }       
+    }
 </style>

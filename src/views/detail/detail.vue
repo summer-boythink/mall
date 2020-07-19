@@ -1,14 +1,14 @@
 <template>
   <div id="detail">
-  <detailnavbar class="nav"></detailnavbar>
+  <detailnavbar class="nav" @titleclick="titleclick"></detailnavbar>
   <scroll class="content" ref="scroll">
     <detail-swiper :topimg="topimg"></detail-swiper>
     <detail-base-info :baseInfo="baseInfo"></detail-base-info>
     <detail-shop-info :shop-info="shopInfo"></detail-shop-info>
     <detail-goods-info :goods-info="dataInfo" @imageLoadOk="imgok"></detail-goods-info>
-    <detail-size :size-info="sizeInfo"></detail-size>
-    <detail-comment-info :commemt-info="commemtInfo"></detail-comment-info>
-    <goodslist :goods="goodsInfoList" :is-detail-msg='isDetailMsg'></goodslist>
+    <detail-size :size-info="sizeInfo" ref="param"></detail-size>
+    <detail-comment-info :commemt-info="commemtInfo" ref="comment"></detail-comment-info>
+    <goodslist :goods="goodsInfoList" :is-detail-msg='isDetailMsg' ref="shops"></goodslist>
   </scroll>
   </div>
 
@@ -27,6 +27,7 @@
   import {getdetail,BaseInfo,ShopInfo,SizeInfo,getDetailsGoodsList} from "network/detail";
   import scroll from "components/common/scroll/scroll";
   import {debounce} from "../../common/utils";
+  import {itemmix} from "../../common/mixin";
 
   export default {
         name: "detail",
@@ -40,9 +41,11 @@
               sizeInfo:{},
               commemtInfo:{},
               goodsInfoList:[],
-              isDetailMsg: true,  //因为我们推荐数据的组件是用同一个的，所以用来区分数据
+              isDetailMsg: true,  //因为我们推荐数据的组件是用同一个的，所以用来区分数据,
+              topY:[]
             }
         },
+        mixins:[itemmix],
         created() {
             this.iid = this.$route.params.iid
 
@@ -62,7 +65,15 @@
               // 判断是否有评论，因为存在没有评论的情况
               if (data.rate.cRate !== 0) this.commemtInfo = data.rate;
 
-
+              // 这个时候$el已成功挂载，但图片还未被全部加载
+              // this.$nextTick(() => {
+              //   this.topY = []
+              //   this.topY.push(0);
+              //   this.topY.push(this.$refs.param.$el.offsetTop);
+              //   this.topY.push(this.$refs.comment.$el.offsetTop);
+              //   this.topY.push(this.$refs.shops.$el.offsetTop);
+              //   console.log(this.topY)
+              // })
             })
             getDetailsGoodsList().then(res => {
               //  获取商品列表数据
@@ -85,14 +96,18 @@
         methods:{
           imgok(){
             this.$refs.scroll.fresh()
+            this.topY = []
+            this.topY.push(0);
+            this.topY.push(this.$refs.param.$el.offsetTop);
+            this.topY.push(this.$refs.comment.$el.offsetTop);
+            this.topY.push(this.$refs.shops.$el.offsetTop);
+            console.log(this.topY)
+          },
+          titleclick(index){
+            this.$refs.scroll.scrollTo(0,-this.topY[index],200)
           }
-        },
-        mounted() {
-            let newfresh = debounce(this.$refs.scroll.fresh,200)
-            this.$bus.$on('imgload',() =>{
-                newfresh()
-            })
         }
+
   }
 </script>
 

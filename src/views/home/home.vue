@@ -33,6 +33,7 @@ import pop from './childs/pop'
 import {gethomemultidata,gethomegoods} from 'network/home'
 import scroll from 'components/common/scroll/scroll'
 import {debounce} from 'common/utils'
+import {itemmix} from "../../common/mixin";
 
 export default {
     name:"home",
@@ -47,6 +48,7 @@ export default {
         backtop
 
     },
+    mixins:[itemmix],
     data(){
         return {
             banners:[],
@@ -61,8 +63,7 @@ export default {
             isshowtop:false,
             taboffset:0,
             isswiperfix:false,
-            saveY:0,
-            itemlisten:null
+            saveY:0
         }
     },
     activated() {
@@ -74,7 +75,7 @@ export default {
       console.log(this.saveY)
       this.saveY = this.$refs.scroll.getscroll()
       //取消监听
-      this.$bus.$off("imgload",this.itemlisten)
+      // this.$bus.$off("imgload",this.itemlisten)
     },
   created(){
           this.gethomemultidata()
@@ -82,16 +83,6 @@ export default {
           this.gethomegoods('new')
           this.gethomegoods('sell')
       },
-    mounted() {
-          const refresh = debounce(this.$refs.scroll.fresh,200)
-          this.itemlisten =() =>{
-            // this.$refs.scroll&&this.$refs.scroll.fresh()
-            // console.log('aaaa')
-            refresh()
-            }
-          this.$bus.$on('imgload',this.itemlisten)
-
-    },
   methods:{
         contentscr(position){
             this.isshowtop = (-position.y)>500

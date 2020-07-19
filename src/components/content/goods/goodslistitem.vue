@@ -5,7 +5,7 @@
     @load="imgok"
     v-if="!isDetailMsg" />
   <!-- detail组件的推荐商品数据 -->
-  <img v-lazy="goodsitem.image"  v-else />
+  <img v-lazy="goodsitem.image" @load="imgok" v-else />
 <div class="context">
     <p>{{goodsitem.title}}</p>
     <span class="price">{{goodsitem.price}}</span>
