@@ -43,3 +43,9 @@ export class SizeInfo {
     this.sizes = rule.tables;
   }
 }
+
+export function getDetailsGoodsList () {
+  return request({
+    url: '/recommend'
+  })
+}

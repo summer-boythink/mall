@@ -61,7 +61,8 @@ export default {
             isshowtop:false,
             taboffset:0,
             isswiperfix:false,
-            saveY:0
+            saveY:0,
+            itemlisten:null
         }
     },
     activated() {
@@ -69,8 +70,11 @@ export default {
       this.$refs.scroll.fresh()
     },
     deactivated() {
+      // 1.保存Y
       console.log(this.saveY)
       this.saveY = this.$refs.scroll.getscroll()
+      //取消监听
+      this.$bus.$off("imgload",this.itemlisten)
     },
   created(){
           this.gethomemultidata()
@@ -80,11 +84,12 @@ export default {
       },
     mounted() {
           const refresh = debounce(this.$refs.scroll.fresh,200)
-          this.$bus.$on('imgload',() =>{
-          // this.$refs.scroll&&this.$refs.scroll.fresh()
-          // console.log('aaaa')
+          this.itemlisten =() =>{
+            // this.$refs.scroll&&this.$refs.scroll.fresh()
+            // console.log('aaaa')
             refresh()
-        })
+            }
+          this.$bus.$on('imgload',this.itemlisten)
 
     },
   methods:{

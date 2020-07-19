@@ -1,6 +1,11 @@
 <template>
-<div class="goods-item">
-<img :src="goodsitem.show.img" alt="" @load="imgok" @click="todetail">
+<div class="goods-item" @click="todetail">
+  <img
+    v-lazy="goodsitem.show.img"
+    @load="imgok"
+    v-if="!isDetailMsg" />
+  <!-- detail组件的推荐商品数据 -->
+  <img v-lazy="goodsitem.image"  v-else />
 <div class="context">
     <p>{{goodsitem.title}}</p>
     <span class="price">{{goodsitem.price}}</span>
@@ -18,7 +23,10 @@ export default{
             default(){
                 return {}
             }
-        }
+        },
+      isDetailMsg: {
+        type: Boolean
+      }
     },
   methods:{
       imgok(){
