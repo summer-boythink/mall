@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-  <detailnavbar class="nav" @titleclick="titleclick"></detailnavbar>
-  <scroll class="content" ref="scroll">
+  <detailnavbar class="nav" @titleclick="titleclick" ref="nav"></detailnavbar>
+  <scroll class="content" ref="scroll" @scroll="fontchange" :probeType="3">
     <detail-swiper :topimg="topimg"></detail-swiper>
     <detail-base-info :baseInfo="baseInfo"></detail-base-info>
     <detail-shop-info :shop-info="shopInfo"></detail-shop-info>
@@ -42,7 +42,8 @@
               commemtInfo:{},
               goodsInfoList:[],
               isDetailMsg: true,  //因为我们推荐数据的组件是用同一个的，所以用来区分数据,
-              topY:[]
+              topY:[],
+              currentindex:0
             }
         },
         mixins:[itemmix],
@@ -105,6 +106,19 @@
           },
           titleclick(index){
             this.$refs.scroll.scrollTo(0,-this.topY[index],200)
+          },
+          fontchange(position){
+            const posY = -position.y
+
+            let length = this.topY.length
+            for (let i = 0;i < length;i++){
+              if((this.currentindex!==i)
+                && (i<length-1 && posY>this.topY[i] && posY<=this.topY[i+1])
+                ||(this.currentindex!==i)&&(i==length-1&&posY>=this.topY[i])){
+                this.currentindex = i;
+                this.$refs.nav.currentindex = this.currentindex
+              }
+            }
           }
         }
 
