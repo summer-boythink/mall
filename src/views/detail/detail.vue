@@ -10,6 +10,7 @@
     <detail-comment-info :commemt-info="commemtInfo" ref="comment"></detail-comment-info>
     <goodslist :goods="goodsInfoList" :is-detail-msg='isDetailMsg' ref="shops"></goodslist>
   </scroll>
+    <detailbottombar></detailbottombar>
   </div>
 
 </template>
@@ -28,6 +29,7 @@
   import scroll from "components/common/scroll/scroll";
   import {debounce} from "../../common/utils";
   import {itemmix} from "../../common/mixin";
+  import detailbottombar from "./children/detailbottombar";
 
   export default {
         name: "detail",
@@ -92,7 +94,8 @@
           DetailSize,
           DetailCommentInfo,
           scroll,
-          goodslist
+          goodslist,
+          detailbottombar
         },
         methods:{
           imgok(){
